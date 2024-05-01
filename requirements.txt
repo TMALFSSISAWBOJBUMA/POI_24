@@ -1,0 +1,5 @@
+matplotlib
+ipykernel
+scipy
+scikit-learn
+numpy
