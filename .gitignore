@@ -1,1 +1,3 @@
 *.xyz
+.venv/
+__pycache__
