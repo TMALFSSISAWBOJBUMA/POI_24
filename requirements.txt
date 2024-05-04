@@ -3,3 +3,5 @@ ipykernel
 scipy
 scikit-learn
 numpy
+pyransac3d
+pyside6

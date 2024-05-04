@@ -15,6 +15,7 @@ def plot_points(
     z: Iterable | np.ndarray = [],
     voxels: np.ndarray = None,
     ax: Axes3D = None,
+    **plot_kwargs
 ):
 
     if ax is None:
@@ -22,9 +23,9 @@ def plot_points(
         ax = fig.add_subplot(projection="3d")
 
     if voxels is None:
-        ax.scatter(x, y, z)
+        ax.scatter(x, y, z, **plot_kwargs)
     else:
-        ax.scatter(*spread_voxels(voxels))
+        ax.scatter(*spread_voxels(voxels), **plot_kwargs)
 
     ax.set_aspect("equal", "box")
     ax.get_figure().tight_layout()
@@ -62,26 +63,26 @@ def plot_surface(
     # ax.plot_wireframe(x, y, z,  rstride=10, cstride=10, **plot_kwargs)
     colour = plot_kwargs.pop("color", "b")
     ax.plot_surface(x, y, z, color=colour, **plot_kwargs)
-    ax.get_figure().tight_layout()
     ax.set_aspect("equal", "box")
     ax.set_xlabel("x")
     ax.set_ylabel("y")
     ax.set_zlabel("z")
+    ax.get_figure().tight_layout()
     return (
         ax,
         ax.get_figure(),
     )
 
 
-def save_cloud(filepath: str, data: Iterable):
+def save_cloud(filepath: str, data: Iterable, **writer_kwargs):
     with open(filepath, "w", newline="") as fp:
-        wr = csv.writer(fp)
+        wr = csv.writer(fp, **writer_kwargs)
         wr.writerows(data)
 
 
-def read_cloud(filepath: str):
+def read_cloud(filepath: str, **reader_kwargs):
     with open(filepath, newline="") as fp:
-        reader = csv.reader(fp)
+        reader = csv.reader(fp, **reader_kwargs)
         data = []
         for row in reader:
             data.append(row)
