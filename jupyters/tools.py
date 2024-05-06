@@ -9,6 +9,12 @@ def spread_voxels(voxels):
     return voxels[:, 0], voxels[:, 1], voxels[:, 2]
 
 
+def px_to_inch(w: int | tuple, h: int | None = None):
+    size = (w, h) if h else w
+    dpi = plt.rcParams["figure.dpi"]
+    return [s / dpi for s in size]
+
+
 def plot_points(
     x: Iterable | np.ndarray = [],
     y: Iterable | np.ndarray = [],
@@ -17,10 +23,14 @@ def plot_points(
     ax: Axes3D = None,
     **plot_kwargs
 ):
-
     if ax is None:
         fig = plt.figure()
         ax = fig.add_subplot(projection="3d")
+    else:
+        fig = ax.get_figure()
+
+    if "figsize" in plot_kwargs:
+        fig.set_size_inches(plot_kwargs.pop("figsize"))
 
     if voxels is None:
         ax.scatter(x, y, z, **plot_kwargs)
@@ -28,11 +38,11 @@ def plot_points(
         ax.scatter(*spread_voxels(voxels), **plot_kwargs)
 
     ax.set_aspect("equal", "box")
-    ax.get_figure().tight_layout()
     ax.set_xlabel("x")
     ax.set_ylabel("y")
     ax.set_zlabel("z")
-    return ax, ax.get_figure()
+    fig.tight_layout()
+    return ax, fig
 
 
 def create_surface_mesh(
@@ -59,6 +69,11 @@ def plot_surface(
     if ax is None:
         fig = plt.figure()
         ax = fig.add_subplot(projection="3d")
+    else:
+        fig = ax.get_figure()
+
+    if "figsize" in plot_kwargs:
+        fig.set_size_inches(plot_kwargs.pop("figsize"))
 
     # ax.plot_wireframe(x, y, z,  rstride=10, cstride=10, **plot_kwargs)
     colour = plot_kwargs.pop("color", "b")
@@ -67,11 +82,8 @@ def plot_surface(
     ax.set_xlabel("x")
     ax.set_ylabel("y")
     ax.set_zlabel("z")
-    ax.get_figure().tight_layout()
-    return (
-        ax,
-        ax.get_figure(),
-    )
+    fig.tight_layout()
+    return ax, fig
 
 
 def save_cloud(filepath: str, data: Iterable, **writer_kwargs):
