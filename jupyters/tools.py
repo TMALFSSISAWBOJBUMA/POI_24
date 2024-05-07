@@ -3,6 +3,13 @@ from typing import Iterable, Callable
 import numpy as np
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
+import os
+
+ROOT_PATH = os.path.join(__file__, os.pardir, os.pardir)
+
+
+def path_from_root(*args):
+    return os.path.normpath(os.path.join(ROOT_PATH, *args))
 
 
 def spread_voxels(voxels):
