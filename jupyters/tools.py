@@ -1,5 +1,5 @@
 import csv
-from typing import Iterable, Callable
+from typing import Iterable, Callable, Generator
 import numpy as np
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
@@ -10,6 +10,18 @@ ROOT_PATH = os.path.join(__file__, os.pardir, os.pardir)
 
 def path_from_root(*args):
     return os.path.normpath(os.path.join(ROOT_PATH, *args))
+
+
+def relative_paths_in_dir(dir: str) -> Generator[tuple[str, str], None, None]:
+    """Generates name and relative path to directory contents
+
+    Args:
+        pardir (str): directory to iterate over
+
+    Returns:
+        Generator[(str,str)]: yields (filename, path) tuples
+    """
+    return ((child, os.path.join(dir, child)) for child in os.listdir(dir))
 
 
 def spread_voxels(voxels):

@@ -2,6 +2,8 @@ matplotlib
 ipykernel
 scipy
 scikit-learn
+scikit-image
 numpy
+pandas
 pyransac3d
 pyside6
