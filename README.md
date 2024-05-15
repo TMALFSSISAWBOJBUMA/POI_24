@@ -5,6 +5,7 @@
 The source code for the exercises is in Jupyter notebooks in the [jupyters](jupyters/) directory.
 - [LAB 2](jupyters/zad2.ipynb)
 - [LAB 3](jupyters/zad3.ipynb)
+- [LAB 4](jupyters/zad4.ipynb)
 
 ## Setup
 
